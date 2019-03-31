@@ -6,18 +6,18 @@ import (
 )
 
 type LockConfig struct {
-	Pin float64 `json:"pin"`
-	SolvedState   float64   `json:"switch_state_solved"`
-	Name string `json:"human_name"`
+	Pin         float64 `json:"pin"`
+	SolvedState float64 `json:"switch_state_solved"`
+	Name        string  `json:"human_name"`
 }
 
 type BoardConfig struct {
-	Locks []LockConfig `json:"locks"`
-	LockDebounceTimeSeconds float64 `json:"lock_debounce_time_seconds"`
-	StartButtonPin float64 `json:"start_button_pin"`
-	ResetButtonPin float64 `json:"reset_button_pin"`
-	StatusLedPin float64 `json:"status_led_pin"`
-	HttpAddr string `json:"http_addr"`
+	Locks                   []LockConfig `json:"locks"`
+	LockDebounceTimeSeconds float64      `json:"lock_debounce_time_seconds"`
+	StartButtonPin          float64      `json:"start_button_pin"`
+	ResetButtonPin          float64      `json:"reset_button_pin"`
+	StatusLedPin            float64      `json:"status_led_pin"`
+	HttpAddr                string       `json:"http_addr"`
 }
 
 func Load(filepath string) (*BoardConfig, error) {

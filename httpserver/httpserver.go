@@ -2,8 +2,8 @@ package httpserver
 
 import (
 	"io"
-	"speedPicker/board"
 	"net/http"
+	"speedPicker/board"
 )
 
 func Serve(board *board.Board, addr string) {

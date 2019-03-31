@@ -8,22 +8,22 @@ import (
 )
 
 type Lock struct {
-	Pin          rpio.Pin      `json:"-"`
-	Name         string        `json:"human_name"`
-	SolvedState   rpio.State   `json:"-"`
-	PickDuration time.Duration `json:"pick_duration"`
+	Pin                 rpio.Pin      `json:"-"`
+	Name                string        `json:"human_name"`
+	SolvedState         rpio.State    `json:"-"`
+	PickDuration        time.Duration `json:"pick_duration"`
 	DebounceTimeSeconds time.Duration `json:"-"`
-	MonitorCtl   chan int      `json:"-"`
+	MonitorCtl          chan int      `json:"-"`
 }
 
 type Board struct {
-	Locks       []Lock    `json:"locks"`
-	StartButton rpio.Pin  `json:"-"`
-	ResetButton rpio.Pin  `json:"-"`
-	StatusLed   rpio.Pin  `json:"-"`
-	StartedAt   time.Time `json:"start_time"`
-	Running     bool      `json:"running"`
-	ButtonMonitorCtl        chan int  `json:"-"`
+	Locks            []Lock    `json:"locks"`
+	StartButton      rpio.Pin  `json:"-"`
+	ResetButton      rpio.Pin  `json:"-"`
+	StatusLed        rpio.Pin  `json:"-"`
+	StartedAt        time.Time `json:"start_time"`
+	Running          bool      `json:"running"`
+	ButtonMonitorCtl chan int  `json:"-"`
 }
 
 // New creates and returns an instance of a Board, initialized with the provided configuration
@@ -68,10 +68,10 @@ func (b *Board) Init(config *config.BoardConfig) {
 // each Lock in the Board
 func (b *Board) Run() {
 	startBtnPush := make(chan int, 1)
-	go monitorPin(b.StartButton, rpio.High, true, 1 * time.Second, startBtnPush, b.ButtonMonitorCtl)
+	go monitorPin(b.StartButton, rpio.High, true, 1*time.Second, startBtnPush, b.ButtonMonitorCtl)
 
 	resetBtnPush := make(chan int, 1)
-	go monitorPin(b.ResetButton, rpio.High, true, 1 * time.Second, resetBtnPush, b.ButtonMonitorCtl)
+	go monitorPin(b.ResetButton, rpio.High, true, 1*time.Second, resetBtnPush, b.ButtonMonitorCtl)
 
 	for {
 		select {
@@ -90,7 +90,6 @@ func (b *Board) Start() {
 		return
 	}
 
-
 	b.StartedAt = time.Now()
 	b.StatusLed.Write(rpio.High)
 	b.Running = true
@@ -107,7 +106,6 @@ func (b *Board) Stop() {
 	if b.Running == false {
 		return
 	}
-
 
 	b.Reset()
 	b.ButtonMonitorCtl <- 0
@@ -188,7 +186,7 @@ func monitorPin(pin rpio.Pin, alertState rpio.State, shouldDebounce bool, coolDo
 	}
 }
 
-func debounce(shouldDebounce bool, coolDownPeriod time.Duration, lastTriggered time.Time) (bool) {
+func debounce(shouldDebounce bool, coolDownPeriod time.Duration, lastTriggered time.Time) bool {
 	return shouldDebounce && time.Since(lastTriggered) >= coolDownPeriod
 }
 
