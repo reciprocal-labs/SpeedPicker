@@ -1,0 +1,29 @@
+{
+  "http_addr": ":80",
+  "start_button_pin": 17,
+  "reset_button_pin": 27,
+  "status_led_pin": 18,
+  "lock_debounce_time_seconds": 10,
+  "locks": [
+    {
+      "pin": 23,
+      "switch_state_solved": 1,
+      "human_name": "Lock 1"
+    },
+    {
+      "pin": 26,
+      "switch_state_solved": 1,
+      "human_name": "Lock 2"
+    },
+    {
+      "pin": 24,
+      "switch_state_solved": 1,
+      "human_name": "Lock 3"
+    },
+    {
+      "pin": 22,
+      "switch_state_solved": 1,
+      "human_name": "Lock 4"
+    }
+  ]
+}
